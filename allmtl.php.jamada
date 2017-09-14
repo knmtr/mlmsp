@@ -1,0 +1,78 @@
+﻿<?php
+/////////////
+//allmtl.php
+/////////////
+
+//includes.
+include_once "conf.php";
+include_once "func.php";
+
+//set mlmname and target svn rep.
+$mlmname = MLMNAME;
+$targetrep = TARGETREP;
+
+//connect mysql.
+mysqlconnect();
+
+//get pager property.
+$allmtl_p = $_GET["allmtl_p"];
+if(!$allmtl_p){
+	$allmtl_p = 1;
+}
+
+// define limit for allmtl page.
+$lim = 20000;
+
+//get htmlcodes.
+$tblallmtl = rdr_tblallmtl($lim,$allmtl_p);
+$tblallmtlpage = rdr_tblallmtlpage($lim,$allmtl_p);
+
+//////////////////////
+//HTML render start.
+//////////////////////
+print <<< DOC_END
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>MLMS</title>
+<!-- load main css -->
+<link rel="stylesheet" type="text/css" href="css/default.css">
+<style type="text/css">
+	body, .title { background: url(images/bg.png) };
+</style>
+<!-- load sortable -->
+<script src="js/sorttable.js" type="text/javascript"></script>
+<!-- load shadowbox -->
+<link rel="stylesheet" type="text/css" href="js/shadowbox/shadowbox.css">
+<script type="text/javascript" src="js/shadowbox/shadowbox.js"></script>
+<!-- load shadowbox config -->
+<script type="text/javascript">
+Shadowbox.init({
+    language: 'en',
+    players:  ['img', 'html', 'iframe']
+});
+</script>
+</head>
+<body>
+<div class="header">
+	<div class="logo"><a href = "/$mlmname/">mlm :: Rep = $targetrep</a></div>
+</div>
+<div class="item">
+	<div class="title">管理対象資材一覧.</div>
+	<div class="article">
+		<table class="sortable" cellspacing="0;">
+		<thead>
+		<tr><th width="30px">資材ID</th><th width="50px">資材名</th><th width="50px">path</th><th width="30px">貸出申請書</th></tr>
+		</thead>
+		<tbody>
+$tblallmtl
+		</tbody>
+		</table>
+$tblallmtlpage
+	</div>
+	</div>
+</div>
+</body>
+</html>
+DOC_END;
+?>
