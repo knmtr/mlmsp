@@ -1,9 +1,9 @@
 <?php
 ////////////
-//admin.php
+//admin.php by musubi
 ////////////
 
-//includes.
+//includes.  by musubi
 include_once "conf.php";
 include_once "func.php";
 
@@ -68,7 +68,7 @@ $mlmlink .= "作業証跡logへのリンクは、<a href=\"log.php\">こちら</
 //20150828 DEL END
 
 //////////////////////
-//HTML render start.
+//HTML render start. by musubi
 //////////////////////
 print <<< DOC_END
 <!DOCTYPE html>
